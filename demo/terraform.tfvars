@@ -1,0 +1,6 @@
+cluster_name            = "demosdbx"
+resource_group_location = "eastus"
+mysql_admin_username    = "myadmin"
+mysql_database_name     = "vehiclesregdb"
+tag_group_name          = "data-analytics"
+tag_env_name            = "demo"

@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Copy blob data",
+        "type": "Copy",
+        "dependsOn": [],
+        "policy": {
+            "timeout": "7.00:00:00",
+            "retry": 0,
+            "retryIntervalInSeconds": 30,
+            "secureOutput": false,
+            "secureInput": false
+        },
+        "userProperties": [],
+        "typeProperties": {
+            "source": {
+                "type": "BlobSource",
+                "recursive": true,
+                "maxConcurrentConnections": 1
+            },
+            "sink": {
+                "type": "BlobSink",
+                "copyBehavior": "PreserveHierarchy",
+                "maxConcurrentConnections": 1
+            },
+            "enableStaging": false
+        },
+        "inputs": [
+            {
+                "referenceName": "${input_reference_name}",
+                "type": "DatasetReference",
+                "parameters": {}
+            }
+        ],
+        "outputs": [
+            {
+                "referenceName": "${output_reference_name}",
+                "type": "DatasetReference",
+                "parameters": {}
+            }
+        ]
+    }
+]

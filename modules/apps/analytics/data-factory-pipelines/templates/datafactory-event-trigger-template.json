@@ -1,0 +1,57 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataFactoryName": {
+            "type": "string"
+        },
+        "triggerName": {
+            "type": "string"
+        },
+        "storageAccountId": {
+            "type": "string"
+        },
+        "containerName": {
+            "type": "string"
+        },
+        "pipelineName": {
+            "type": "string"
+        },
+        "blobPathBeginsWith": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "dataFactoryId": "[concat('Microsoft.DataFactory/factories/', parameters('dataFactoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('dataFactoryName'), '/', parameters('triggerName'))]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "[parameters('pipelineName')]",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "BlobEventsTrigger",
+                "typeProperties": {
+                    "blobPathBeginsWith": "[concat('/', parameters('containerName'), '/blobs/', parameters('blobPathBeginsWith'))]",
+                    "ignoreEmptyBlobs": true,
+                    "scope": "[parameters('storageAccountId')]",
+                    "events": [
+                        "Microsoft.Storage.BlobCreated"
+                    ]
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}
